@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+
+{% block title %}
+<title>Login Page</title>
+{% endblock title %}
+
+{% block content %}
+
+
+<form action="" method="POST">
+   {% csrf_token %}
+    {{x}}
+    <label for="">Email</label>
+    <input type="email" placeholder="Enter Email" name="email" id="">
+    <br>
+    <br>
+    {{msg}}
+    <label for="">Password</label>
+    <input type="password" placeholder="Enter password" name="password" id="">
+    <br>
+    <br>
+    <button type="submit">Login</button>
+</form>
+
+{% endblock content %} 
