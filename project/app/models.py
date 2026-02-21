@@ -20,3 +20,12 @@ class Department(models.Model):
     Dep_name = models.CharField(max_length=20)
     Dep_desc = models.CharField(max_length=20)
     Dep_head = models.CharField(max_length=20)
+    
+    
+class AddEmployee(models.Model):
+    Name=models.CharField(max_length=50)
+    Email=models.EmailField()
+    Contact=models.BigIntegerField()
+    Images=models.ImageField(upload_to='image')
+    Code=models.CharField(max_length=20)
+    Departments=models.CharField(max_length=20, null=True)

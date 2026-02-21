@@ -1,5 +1,5 @@
 from django.shortcuts import render ,redirect
-from app.models import Employee , Department
+from app.models import Employee , Department,AddEmployee
 from django.contrib import messages
 
 # Create your views here.
@@ -58,10 +58,10 @@ def Login(req):
         if e=='admin@gmail.com' and p=='admin':
             a_data={
                 'id':1,
-                'name':'Admin',
+                'name':'Admin Lakki',
                 'email':'admin@gmail.com',
                 'password':'admin',
-                'image':'img/well.png',
+                'image':'images/admin.png'
             }
             req.session['a_data']=a_data
             return redirect('admindeshboard')
@@ -100,44 +100,80 @@ def logout(req):
     if 'user_id' in req.session:
         req.session.flush()
         return redirect('Login')
-    return render('Login')
+    return redirect('Login')
 
 def add_dep(req):
     if 'a_data' in req.session:
-        a_data =req.session.get('a_data')
-        return render(req,'admindeshboard.html',{'data':a_data, 'add_dep':True})
+        a_data = req.session.get('a_data')
+        return render(req,'admindeshboard.html',{'data':a_data , 'add_dep':True})
     else:
         return redirect('Login')
     
-
-
     
 def save_dep(req):
     if 'a_data' in req.session:
         if req.method == 'POST':
+           
             dn=req.POST.get('dep_name')
-            dd=req.POST.get('dep_sec')
-            dh=req.POST.get('dep_hed')
-            dept = Department.objects.filter(Dep_name=dn)
+            dd=req.POST.get('dep_desc')
+            dh=req.POST.get('dep_head')
+            dept=Department.objects.filter(Dep_name=dn)
             if dept:
-                messages.warning(req, 'Department already Exisst')
-                a_data =req.session.get('a_data')
-                return render(req,'admindeshboard.html',{'data':a_data, 'add_dep':True})
+               messages.warning(req,'department already exist')
+               a_data= req.session.get('a_data')
+               return render(req,'admindeshboard.html',{'data':a_data , 'add_dep':True})
             else:
                 Department.objects.create(Dep_name=dn,Dep_desc=dd,Dep_head=dh)
-                messages.success(req, 'Department Crecated')
-                a_data = req.session.get('a_data')
-                return render(req,'admindeshboard.html',{'data':a_data, 'add_dep':True})
-    else:   
+                messages.success(req,'Department created')
+                a_data= req.session.get('a_data')
+                return render(req,'admindeshboard.html',{'data':a_data , 'add_dep':True})
+    else:
         return redirect('Login')
     
 def show_dep(req):
     if 'a_data' in req.session:
-        a_data =req.session.get('a_data')
-        # Deepartment model ka code
-        return render(req,'admindeshboard.html',{'data':a_data, 'show_dep':True})
+        a_data = req.session.get('a_data')
+        departments = Department.objects.all()
+        return render(req,'admindeshboard.html',{'data':a_data , 'show_dep':True, 'departments':departments})
     else:
         return redirect('Login')
     
-def showdepartment(req):
-    return render(req, "showdepartment.html" )
+
+def aad_emp(req):
+    if 'a_data' in req.session:
+        a_data = req.session.get('a_data')
+        departments = Department.objects.all()
+        return render(req,'admindeshboard.html',{'data':a_data , 'aad_emp':True, 'departments':departments})
+    else:
+        return redirect('Login')
+def save_emp(req):
+    if 'a_data' in req.session:
+        if req.method == 'POST':
+            en=req.POST.get('name')
+            ec=req.POST.get('contact')
+            ee=req.POST.get('email')
+            ed=req.POST.get('department')
+            eco=req.POST.get('code')
+            ei=req.FILES.get('image')
+            dept=AddEmployee.objects.filter(Email=ee)
+            if dept:
+               messages.warning(req,'Emploayee already exist')
+               a_data= req.session.get('a_data')
+               departments = AddEmployee.objects.all()
+               return render(req,'admindeshboard.html',{'data':a_data , 'aad_emp':True, 'departments':departments})
+            else:
+                AddEmployee.objects.create(Name=en,Email=ee,Contact=ec,Images=ei,Code=eco,Departments=ed)
+                messages.success(req,'Employee created')
+                departments = AddEmployee.objects.all()
+                a_data= req.session.get('a_data')
+                return render(req,'admindeshboard.html',{'data':a_data , 'aad_emp':True})
+    else:
+        return redirect('Login')
+    
+def show_emp(req):
+    if 'a_data' in req.session:
+        a_data = req.session.get('a_data')
+        departments = AddEmployee.objects.all()
+        return render(req,'admindeshboard.html',{'data':a_data , 'show_emp':True, 'departments':departments})
+    else:
+        return redirect('Login')
