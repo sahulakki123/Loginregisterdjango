@@ -1,5 +1,6 @@
 from django.shortcuts import render ,redirect
-from app.models import Employee
+from app.models import Employee , Department
+from django.contrib import messages
 
 # Create your views here.
 
@@ -59,7 +60,8 @@ def Login(req):
                 'id':1,
                 'name':'Admin',
                 'email':'admin@gmail.com',
-                'password':'admin'
+                'password':'admin',
+                'image':'img/well.png',
             }
             req.session['a_data']=a_data
             return redirect('admindeshboard')
@@ -99,3 +101,43 @@ def logout(req):
         req.session.flush()
         return redirect('Login')
     return render('Login')
+
+def add_dep(req):
+    if 'a_data' in req.session:
+        a_data =req.session.get('a_data')
+        return render(req,'admindeshboard.html',{'data':a_data, 'add_dep':True})
+    else:
+        return redirect('Login')
+    
+
+
+    
+def save_dep(req):
+    if 'a_data' in req.session:
+        if req.method == 'POST':
+            dn=req.POST.get('dep_name')
+            dd=req.POST.get('dep_sec')
+            dh=req.POST.get('dep_hed')
+            dept = Department.objects.filter(Dep_name=dn)
+            if dept:
+                messages.warning(req, 'Department already Exisst')
+                a_data =req.session.get('a_data')
+                return render(req,'admindeshboard.html',{'data':a_data, 'add_dep':True})
+            else:
+                Department.objects.create(Dep_name=dn,Dep_desc=dd,Dep_head=dh)
+                messages.success(req, 'Department Crecated')
+                a_data = req.session.get('a_data')
+                return render(req,'admindeshboard.html',{'data':a_data, 'add_dep':True})
+    else:   
+        return redirect('Login')
+    
+def show_dep(req):
+    if 'a_data' in req.session:
+        a_data =req.session.get('a_data')
+        # Deepartment model ka code
+        return render(req,'admindeshboard.html',{'data':a_data, 'show_dep':True})
+    else:
+        return redirect('Login')
+    
+def showdepartment(req):
+    return render(req, "showdepartment.html" )

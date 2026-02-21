@@ -26,5 +26,8 @@ urlpatterns = [
     path('userdeshboard/',views.userdeshboard,name='userdeshboard'),
     path('logout/',views.logout,name='logout'),
     path('admindeshboard/',views.admindeshboard,name='admindeshboard'),
+    path('admindeshboard/add_dep/',views.add_dep,name='add_dep'),
+    path('admindeshboard/show_dep/',views.show_dep,name='show_dep'),
+    path('admindeshboard/save_dep/',views.save_dep,name='save_dep'),
 
 ]

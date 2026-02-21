@@ -15,3 +15,8 @@ class Employee(models.Model):
     City=models.CharField(max_length=20)
     Qualification=models.CharField(max_length=20)
     Gender=models.CharField(max_length=20)
+    
+class Department(models.Model):
+    Dep_name = models.CharField(max_length=20)
+    Dep_desc = models.CharField(max_length=20)
+    Dep_head = models.CharField(max_length=20)
