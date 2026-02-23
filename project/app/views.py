@@ -66,20 +66,44 @@ def Login(req):
             req.session['a_data']=a_data
             return redirect('admindeshboard')
         else:
-            user=Employee.objects.filter(Email=e)
-            if not user:
-                msg="Register First"
-                return redirect('Registration')
-            else:
-                userdata = Employee.objects.get(Email=e)
-                if p==userdata.Password:
-                    req.session['user_id']=userdata.id 
-                    return redirect('userdeshboard')
+            em = Employee.objects.filter(Email=e)
+            if em:
+                emp_data=Employee.objects.get(Email=e)
+                if p==emp_data.Code:
+                    req.session['emp_id']=emp_data.id
+                    redirect('empdeshbord')
                 else:
-                    msg='Email & password not mach'
-                    return render(req, 'Login.html',{'x':msg})
+                    messages.warning(req,'Email & password not match')
+                    return redirect('Login')
+            else:
+                messages.warning(req,'Employee dose not esist')
+                return redirect('Login')
+            
+            # user=Employee.objects.filter(Email=e)
+            # if not user:
+            #     msg="Register First"
+            #     return redirect('Registration')
+            # else:
+            #     userdata = Employee.objects.get(Email=e)
+            #     if p==userdata.Password:
+            #         req.session['user_id']=userdata.id 
+            #         return redirect('userdeshboard')
+            #     else:
+            #         msg='Email & password not mach'
+            #         return render(req, 'Login.html',{'x':msg})
             
     return render(req,'Login.html')
+
+def empdeshbord(req):
+    if 'emp_id' in req.session:
+        eid=req.session.get('emp_id')
+        emp_data = Employee.objects.get(id=eid)
+        return render(req, 'empdeshbord.html',{'data':emp_data})
+    else:
+        return redirect('Login')
+
+
+
 
 def userdeshboard(req):
     if 'user_id' in req.session:

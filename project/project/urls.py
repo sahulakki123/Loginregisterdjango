@@ -32,5 +32,6 @@ urlpatterns = [
     path('admindeshboard/aad_emp/',views.aad_emp,name='aad_emp'),
     path('admindeshboard/save_emp/',views.save_emp,name='save_emp'),
     path('admindeshboard/show_emp/',views.show_emp,name='show_emp'),
+    path('empdeshbord/',views.empdeshbord,name='empdeshbord'),
 
 ]
