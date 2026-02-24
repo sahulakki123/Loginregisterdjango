@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +35,8 @@ urlpatterns = [
     path('admindeshboard/save_emp/',views.save_emp,name='save_emp'),
     path('admindeshboard/show_emp/',views.show_emp,name='show_emp'),
     path('empdeshbord/',views.empdeshbord,name='empdeshbord'),
+    path('empdeshbord/profile/',views.profile,name='profile'),
+    path('empdeshbord/setting/',views.setting,name='setting'),
+    path('empdeshbord/Query/',views.Query,name='Query'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

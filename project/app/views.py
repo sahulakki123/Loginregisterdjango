@@ -66,12 +66,12 @@ def Login(req):
             req.session['a_data']=a_data
             return redirect('admindeshboard')
         else:
-            em = Employee.objects.filter(Email=e)
+            em = AddEmployee.objects.filter(Email=e)
             if em:
-                emp_data=Employee.objects.get(Email=e)
+                emp_data=AddEmployee.objects.get(Email=e)
                 if p==emp_data.Code:
                     req.session['emp_id']=emp_data.id
-                    redirect('empdeshbord')
+                    return redirect('empdeshbord')
                 else:
                     messages.warning(req,'Email & password not match')
                     return redirect('Login')
@@ -94,13 +94,37 @@ def Login(req):
             
     return render(req,'Login.html')
 
+
 def empdeshbord(req):
     if 'emp_id' in req.session:
         eid=req.session.get('emp_id')
-        emp_data = Employee.objects.get(id=eid)
+        emp_data = AddEmployee.objects.get(id=eid)
+
         return render(req, 'empdeshbord.html',{'data':emp_data})
     else:
         return redirect('Login')
+    
+def profile(req):
+   if 'emp_id' in req.session:
+      eid = req.session.get('emp_id')
+      emp_data = AddEmployee.objects.get(id=eid)
+      return render(req,'empdeshbord.html',{'data':emp_data , 'profile':True})
+   return redirect('login')
+
+def setting(req):
+   if 'emp_id' in req.session:
+      eid = req.session.get('emp_id')
+      emp_data = AddEmployee.objects.get(id=eid)
+      return render(req,'empdeshbord.html',{'data':emp_data , 'setting':True})
+   return redirect('login')
+
+def Query(req):
+   if 'emp_id' in req.session:
+      eid = req.session.get('emp_id')
+      emp_data = AddEmployee.objects.get(id=eid)
+      return render(req,'empdeshbord.html',{'data':emp_data , 'Query':True})
+   return redirect('login')
+        
 
 
 
