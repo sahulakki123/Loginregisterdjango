@@ -29,3 +29,12 @@ class AddEmployee(models.Model):
     Images=models.ImageField(upload_to='image')
     Code=models.CharField(max_length=20)
     Departments=models.CharField(max_length=20, null=True)
+
+class Query(models.Model):
+    Name = models.CharField(max_length=50)
+    Email = models.EmailField()
+    Departments = models.CharField(max_length=40)
+    Query = models.TextField()
+    Status = models.CharField(default="pending")
+    Reply = models.TextField(null=True)
+    

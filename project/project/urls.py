@@ -34,9 +34,16 @@ urlpatterns = [
     path('admindeshboard/aad_emp/',views.aad_emp,name='aad_emp'),
     path('admindeshboard/save_emp/',views.save_emp,name='save_emp'),
     path('admindeshboard/show_emp/',views.show_emp,name='show_emp'),
+    
     path('empdeshbord/',views.empdeshbord,name='empdeshbord'),
     path('empdeshbord/profile/',views.profile,name='profile'),
     path('empdeshbord/setting/',views.setting,name='setting'),
-    path('empdeshbord/Query/',views.Query,name='Query'),
+    path('empdeshbord/query/',views.empquery,name='empquery'),
+    path('empdeshbord/querydata/',views.querydata,name='querydata'),
+    path('empdeshbord/allquery/',views.allquery,name='allquery'),
+    path('empdashboard/pendingquery/',views.pendingquery,name='pendingquery'),
+    path('empdashboard/donequery/',views.donequery,name='donequery'),
+    path('admindashboard/emp_all_query/',views.emp_all_query,name='emp_all_query'),
+    path('admindashboard/emp_all_query/reply/<int:pk>/',views.reply,name='reply'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

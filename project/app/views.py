@@ -1,6 +1,7 @@
 from django.shortcuts import render ,redirect
-from app.models import Employee , Department,AddEmployee
+from app.models import Employee , Department,AddEmployee,Query
 from django.contrib import messages
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -99,7 +100,6 @@ def empdeshbord(req):
     if 'emp_id' in req.session:
         eid=req.session.get('emp_id')
         emp_data = AddEmployee.objects.get(id=eid)
-
         return render(req, 'empdeshbord.html',{'data':emp_data})
     else:
         return redirect('Login')
@@ -109,24 +109,77 @@ def profile(req):
       eid = req.session.get('emp_id')
       emp_data = AddEmployee.objects.get(id=eid)
       return render(req,'empdeshbord.html',{'data':emp_data , 'profile':True})
-   return redirect('login')
+   return redirect('Login')
 
 def setting(req):
    if 'emp_id' in req.session:
       eid = req.session.get('emp_id')
       emp_data = AddEmployee.objects.get(id=eid)
       return render(req,'empdeshbord.html',{'data':emp_data , 'setting':True})
-   return redirect('login')
+   return redirect('Login')
 
-def Query(req):
-   if 'emp_id' in req.session:
-      eid = req.session.get('emp_id')
-      emp_data = AddEmployee.objects.get(id=eid)
-      return render(req,'empdeshbord.html',{'data':emp_data , 'Query':True})
-   return redirect('login')
+def empquery(req):
+    if 'emp_id' in req.session:
+        eid = req.session.get('emp_id')
+        emp_data = AddEmployee.objects.get(id=eid)
+        emp_dept = Department.objects.all()
+        return render(req,'empdeshbord.html',{'data':emp_data , 'empquery':True, 'emp_dept':emp_dept})
+  
+    else:
+        return redirect('Login')
         
 
+def querydata(req):
+    if req.method =='POST':
+        if 'emp_id' in req.session:
+            n = req.POST.get('name')
+            e = req.POST.get('email')
+            d = req.POST.get('department')
+            q = req.POST.get('query')
+            Query.objects.create(Name=n,Email=e,Departments=d,Query=q)
+            messages.success(req, "Query created....")
+            e_id = req.session.get('emp_id')
+            emp_data = AddEmployee.objects.get(id=e_id)
+            emp_dept = Department.objects.all()
+            return render(req,'empdeshbord.html',{'data':emp_data , 'empquery':True, 'emp_dept':emp_dept})
+        else:
+            return redirect('Login')
+        
+        
+def allquery(req):
+    if 'emp_id' in req.session:
+        e_id = req.session.get('emp_id')
+        emp_data = AddEmployee.objects.get(id=e_id)
+        all_query = Query.objects.filter(Email=emp_data.Email)
+        return render(req,'empdeshbord.html',{'data':emp_data , 'allquery':True, 'all_query':all_query})
+    else:
+        return redirect('Login')   
+    
+    
+    
+def pendingquery(req):
+    if 'emp_id' in req.session:
+        e_id = req.session.get('emp_id')
+        emp_data = AddEmployee.objects.get(id=e_id)
+        all_query = Query.objects.filter(Email=emp_data.Email, Status=False)
+        return render(req, 'empdeshbord.html', {'data':emp_data,'pendingquery':True , 'all_query':all_query})
+    else:
+        return redirect('Login')
+    
+def donequery(req):
+    if 'emp_id' in req.session:
+        e_id = req.session.get('emp_id')
+        emp_data = AddEmployee.objects.get(id=e_id)
+        all_query = Query.objects.filter(Email=emp_data.Email, Status=True)
+        return render(req, 'empdeshbord.html', {'data':emp_data,'donequery':True , 'all_query':all_query})
+    else:
+        return redirect('Login')
+    
 
+    
+        
+    
+     
 
 
 def userdeshboard(req):
@@ -203,6 +256,13 @@ def save_emp(req):
             ed=req.POST.get('department')
             eco=req.POST.get('code')
             ei=req.FILES.get('image')
+            send_mail(
+            "Django Email forwold",
+            f'this is informations regarding your company credentials Name:{en}, \nEmail:{ee}, \nContact:{ec},\nDepartment:{ed},\nCode{eco},\nImage{ei}',
+            "lakkisahus04@gmail.com",
+            [ee],
+            fail_silently=False,
+        )
             dept=AddEmployee.objects.filter(Email=ee)
             if dept:
                messages.warning(req,'Emploayee already exist')
@@ -225,3 +285,20 @@ def show_emp(req):
         return render(req,'admindeshboard.html',{'data':a_data , 'show_emp':True, 'departments':departments})
     else:
         return redirect('Login')
+    
+    
+
+def emp_all_query(req):
+    if 'a_data' in req.session:
+        a_data = req.session.get('a_data')
+        empallquery = Query.objects.all()
+        return render(req,'admindeshboard.html',{'data':a_data , 'emp_all_query':True, 'all_query':empallquery})
+    else:
+        return redirect('Login')
+    
+def reply(req , pk):
+    if 'a_data' in req.session:
+        a_data = req.session.get('a_data')
+        q_data=Query.objects.get(id=pk)
+        emp_all_query=Query.objects.all()
+        return render(req, 'admindeshboard.html', {'data':a_data , 'q_data':q_data , 'emp_all_query':emp_all_query} )

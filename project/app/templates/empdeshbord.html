@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Employee Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    
-         
+    <meta charset="UTF-8">
+    <title>Employee Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
         .sidebar {
             height: 100vh;
             background: gray;
         }
+
         .sidebar a {
             color: #fff;
             text-decoration: none;
@@ -23,28 +23,32 @@
             border-radius: 5px;
             margin-bottom: 5px;
         }
+
         .sidebar a:hover {
             background: #0d6efd;
         }
+
         .content-box {
-          background: white;
-          border-radius: 10px;
-          padding: 20px;
-          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-          min-height: 400px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
         }
-  </style>
+    </style>
 
 
 
-  <style>
-        body{
+    <style>
+        body {
             background-color: #f4f6f9;
         }
-        .card{
+
+        .card {
             border-radius: 15px;
         }
-        .card-header{
+
+        .card-header {
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
         }
@@ -54,179 +58,63 @@
 <body>
 
 
-<nav class="navbar navbar-dark bg-dark px-4">
-  <span class="navbar-brand">Welcome {{data.Name}}</span>
-  <a href="{% url 'logout' %}"><button class="btn btn-danger">Logout</button></a>
-</nav>
+    <nav class="navbar navbar-dark bg-dark px-4">
+        <span class="navbar-brand">Welcome {{data.Name}}</span>
+        <a href="{% url 'logout' %}"><button class="btn btn-danger">Logout</button></a>
+    </nav>
 
-<div class="container-fluid">
-  <div class="row">
-
-    
-    <div class="col-md-3 col-lg-2 sidebar p-3">
-      <a href="{% url 'profile' %}">Profile</a>
-      <a href="{% url 'setting' %}">Setting</a>
-      <a href="{% url 'Query' %}">Query</a>
-      <a href="">All Query</a>
-      <a href="">Panding Query</a>
-      <a href="#">Done Query</a>
-    </div> 
-    
-
-    <div class="col-md-9 col-lg-10 p-4">
-      <div class="content-box">
-         
-        {% if profile %}
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
-
-            <style>
-                body {
-                    background: linear-gradient(to right, #e3f2fd, #f8f9fa);
-                    font-family: 'Segoe UI', sans-serif;
-                }
-            
-                .profile-wrapper {
-                    min-height: 100vh;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-            
-                .profile-card {
-                    width: 100%;
-                    max-width: 500px;
-                    border-radius: 20px;
-                    padding: 40px 30px;
-                    background: #ffffff;
-                    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-                    text-align: center;
-                    transition: 0.3s ease;
-                }
-            
-                .profile-card:hover {
-                    transform: translateY(-5px);
-                }
-            
-                .profile-img {
-                    width: 160px;
-                    height: 160px;
-                    object-fit: cover;
-                    border-radius: 50%;
-                    border: 6px solid #0d6efd;
-                    padding: 5px;
-                    background: #fff;
-                    margin-bottom: 20px;
-                }
-            
-                .profile-name {
-                    font-size: 24px;
-                    font-weight: 700;
-                    margin-bottom: 5px;
-                }
-            
-                .profile-role {
-                    color: gray;
-                    font-size: 14px;
-                    margin-bottom: 20px;
-                }
-            
-                .profile-info {
-                    text-align: left;
-                    margin-top: 20px;
-                }
-            
-                .profile-info p {
-                    padding: 10px 0;
-                    margin-bottom: 0;
-                    border-bottom: 1px solid #eee;
-                    font-size: 15px;
-                    display: flex;
-                    align-items: center;
-                }
-            
-                .profile-info i {
-                    color: #0d6efd;
-                    margin-right: 10px;
-                    font-size: 18px;
-                }
-            
-                .profile-info span {
-                    font-weight: 600;
-                    margin-right: 5px;
-                }
-            
-                .btn-edit {
-                    margin-top: 25px;
-                    border-radius: 25px;
-                    padding: 8px 25px;
-                }
-            </style>
+    <div class="container-fluid">
+        <div class="row">
 
 
-            <div class="profile-wrapper">
-                <div class="profile-card">
-            
-                    <!-- Profile Image -->
-                    {% if data.Images %}
-                        <img src="{{ data.Images.url }}" alt="Profile Image" class="profile-img">
-                    {% else %}
-                        <img src="https://via.placeholder.com/160" class="profile-img">
-                    {% endif %}
-            
-                    <!-- Name -->
-                    <div class="profile-name">{{ data.Name }}</div>
-                    <div class="profile-role">{{ data.Departments }}</div>
-            
-                    <hr>
-            
-                    <!-- Details -->
-                    <div class="profile-info">
-                        <p><i class="bi bi-envelope-fill"></i><span>Email:</span> {{ data.Email }}</p>
-                        <p><i class="bi bi-telephone-fill"></i><span>Contact:</span> {{ data.Contact }}</p>
-                        <p><i class="bi bi-person-badge-fill"></i><span>Code:</span> {{ data.Code }}</p>
-                        <p><i class="bi bi-building"></i><span>Department:</span> {{ data.Departments }}</p>
-                    </div>
-            
-                    <!-- Edit Button -->
-                    {% comment %} <a href="#" class="btn btn-primary btn-edit">
-                        <i class="bi bi-pencil-square"></i> Edit Profile
-                    </a> {% endcomment %}
-            
-                    </div>
-                </div>
-        {% elif setting %}
-                  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
-        
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'setting' %}">Setting</a>
+                <a href="{% url 'empquery' %}">Query</a>
+                <a href="{% url 'allquery' %}">All Query</a>
+                <a href="{% url 'pendingquery' %}">Panding Query</a>
+                <a href="{% url 'donequery' %}">Done Query</a>
+            </div>
+
+
+            <div class="col-md-9 col-lg-10 p-4">
+                <div class="content-box">
+
+                    {% if profile %}
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+                        rel="stylesheet">
+                    <link
+                        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+                        rel="stylesheet">
+
                     <style>
                         body {
                             background: linear-gradient(to right, #e3f2fd, #f8f9fa);
                             font-family: 'Segoe UI', sans-serif;
                         }
-                    
+
                         .profile-wrapper {
                             min-height: 100vh;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                         }
-                    
+
                         .profile-card {
                             width: 100%;
                             max-width: 500px;
                             border-radius: 20px;
                             padding: 40px 30px;
                             background: #ffffff;
-                            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+                            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
                             text-align: center;
                             transition: 0.3s ease;
                         }
-                    
+
                         .profile-card:hover {
                             transform: translateY(-5px);
                         }
-                    
+
                         .profile-img {
                             width: 160px;
                             height: 160px;
@@ -237,24 +125,24 @@
                             background: #fff;
                             margin-bottom: 20px;
                         }
-                    
+
                         .profile-name {
                             font-size: 24px;
                             font-weight: 700;
                             margin-bottom: 5px;
                         }
-                    
+
                         .profile-role {
                             color: gray;
                             font-size: 14px;
                             margin-bottom: 20px;
                         }
-                    
+
                         .profile-info {
                             text-align: left;
                             margin-top: 20px;
                         }
-                    
+
                         .profile-info p {
                             padding: 10px 0;
                             margin-bottom: 0;
@@ -263,42 +151,42 @@
                             display: flex;
                             align-items: center;
                         }
-                    
+
                         .profile-info i {
                             color: #0d6efd;
                             margin-right: 10px;
                             font-size: 18px;
                         }
-                    
+
                         .profile-info span {
                             font-weight: 600;
                             margin-right: 5px;
                         }
-                    
+
                         .btn-edit {
                             margin-top: 25px;
                             border-radius: 25px;
                             padding: 8px 25px;
                         }
                     </style>
-        
-        
+
+
                     <div class="profile-wrapper">
                         <div class="profile-card">
-                    
+
                             <!-- Profile Image -->
                             {% if data.Images %}
-                                <img src="{{ data.Images.url }}" alt="Profile Image" class="profile-img">
+                            <img src="{{ data.Images.url }}" alt="Profile Image" class="profile-img">
                             {% else %}
-                                <img src="https://via.placeholder.com/160" class="profile-img">
+                            <img src="https://via.placeholder.com/160" class="profile-img">
                             {% endif %}
-                    
+
                             <!-- Name -->
                             <div class="profile-name">{{ data.Name }}</div>
                             <div class="profile-role">{{ data.Departments }}</div>
-                    
+
                             <hr>
-                    
+
                             <!-- Details -->
                             <div class="profile-info">
                                 <p><i class="bi bi-envelope-fill"></i><span>Email:</span> {{ data.Email }}</p>
@@ -306,110 +194,398 @@
                                 <p><i class="bi bi-person-badge-fill"></i><span>Code:</span> {{ data.Code }}</p>
                                 <p><i class="bi bi-building"></i><span>Department:</span> {{ data.Departments }}</p>
                             </div>
-                    
+
+                            <!-- Edit Button -->
+                            {% comment %} <a href="#" class="btn btn-primary btn-edit">
+                                <i class="bi bi-pencil-square"></i> Edit Profile
+                            </a> {% endcomment %}
+
+                        </div>
+                    </div>
+                    {% elif setting %}
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+                        rel="stylesheet">
+                    <link
+                        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+                        rel="stylesheet">
+
+                    <style>
+                        body {
+                            background: linear-gradient(to right, #e3f2fd, #f8f9fa);
+                            font-family: 'Segoe UI', sans-serif;
+                        }
+
+                        .profile-wrapper {
+                            min-height: 100vh;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .profile-card {
+                            width: 100%;
+                            max-width: 500px;
+                            border-radius: 20px;
+                            padding: 40px 30px;
+                            background: #ffffff;
+                            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                            text-align: center;
+                            transition: 0.3s ease;
+                        }
+
+                        .profile-card:hover {
+                            transform: translateY(-5px);
+                        }
+
+                        .profile-img {
+                            width: 160px;
+                            height: 160px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                            border: 6px solid #0d6efd;
+                            padding: 5px;
+                            background: #fff;
+                            margin-bottom: 20px;
+                        }
+
+                        .profile-name {
+                            font-size: 24px;
+                            font-weight: 700;
+                            margin-bottom: 5px;
+                        }
+
+                        .profile-role {
+                            color: gray;
+                            font-size: 14px;
+                            margin-bottom: 20px;
+                        }
+
+                        .profile-info {
+                            text-align: left;
+                            margin-top: 20px;
+                        }
+
+                        .profile-info p {
+                            padding: 10px 0;
+                            margin-bottom: 0;
+                            border-bottom: 1px solid #eee;
+                            font-size: 15px;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .profile-info i {
+                            color: #0d6efd;
+                            margin-right: 10px;
+                            font-size: 18px;
+                        }
+
+                        .profile-info span {
+                            font-weight: 600;
+                            margin-right: 5px;
+                        }
+
+                        .btn-edit {
+                            margin-top: 25px;
+                            border-radius: 25px;
+                            padding: 8px 25px;
+                        }
+                    </style>
+
+
+                    <div class="profile-wrapper">
+                        <div class="profile-card">
+
+                            <!-- Profile Image -->
+                            {% if data.Images %}
+                            <img src="{{ data.Images.url }}" alt="Profile Image" class="profile-img">
+                            {% else %}
+                            <img src="https://via.placeholder.com/160" class="profile-img">
+                            {% endif %}
+
+                            <!-- Name -->
+                            <div class="profile-name">{{ data.Name }}</div>
+                            <div class="profile-role">{{ data.Departments }}</div>
+
+                            <hr>
+
+                            <!-- Details -->
+                            <div class="profile-info">
+                                <p><i class="bi bi-envelope-fill"></i><span>Email:</span> {{ data.Email }}</p>
+                                <p><i class="bi bi-telephone-fill"></i><span>Contact:</span> {{ data.Contact }}</p>
+                                <p><i class="bi bi-person-badge-fill"></i><span>Code:</span> {{ data.Code }}</p>
+                                <p><i class="bi bi-building"></i><span>Department:</span> {{ data.Departments }}</p>
+                            </div>
+
                             <!-- Edit Button -->
                             <a href="#" class="btn btn-primary btn-edit">
                                 <i class="bi bi-pencil-square"></i> Edit Profile
                             </a>
-                    
+
+                        </div>
+                    </div>
+                    {% elif empquery %}
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    {{message}}
+                    {% endfor %}
+                    {% endif %}
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+                        rel="stylesheet">
+
+                    <style>
+                        body {
+                            background: linear-gradient(to right, #eef2f3, #dfe9f3);
+                            font-family: 'Segoe UI', sans-serif;
+                        }
+
+                        .form-wrapper {
+                            min-height: 100vh;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .query-card {
+                            width: 100%;
+                            max-width: 600px;
+                            background: #ffffff;
+                            padding: 40px;
+                            border-radius: 20px;
+                            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                        }
+
+                        .query-title {
+                            font-weight: 700;
+                            margin-bottom: 25px;
+                            text-align: center;
+                        }
+
+                        .form-control[readonly],
+                        textarea[readonly] {
+                            background-color: #f8f9fa;
+                            cursor: not-allowed;
+                        }
+
+                        .btn-query {
+                            border-radius: 25px;
+                            padding: 10px;
+                            font-weight: 600;
+                            margin-top: 15px;
+                        }
+                    </style>
+
+
+                    <div class="form-wrapper">
+                        <div class="query-card">
+
+                            <h4 class="query-title">Employee Query Details</h4>
+
+                            <form action="{% url 'querydata' %}" method="post" class="card p-4 shadow">
+                                {% csrf_token %}
+
+                                <h4 class="text-center mb-4">Employee Query</h4>
+
+                                <!-- Name -->
+                                <div class="mb-3">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" value="{{data.Name}}" class="form-control" readonly>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" value="{{data.Email}}" class="form-control"
+                                        readonly>
+                                </div>
+
+                                <!-- Department -->
+                                <div class="mb-3">
+                                    <label class="form-label">Department</label>
+                                    <select name="department" class="form-select">
+                                        <option value="">Select Department</option>
+                                        {% for i in emp_dept %}
+                                        <option value="{{i.Dep_name}}">{{i.Dep_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- Query -->
+                                <div class="mb-3">
+                                    <label class="form-label">Your Query</label>
+                                    <textarea name="query" class="form-control" rows="4"
+                                        placeholder="Write your query..."></textarea>
+                                </div>
+
+                                <!-- Submit -->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Submit Query</button>
+                                </div>
+
+                            </form>
+                            {% elif allquery %}
+
+                            <div class="card shadow p-4">
+                                <h4 class="mb-3">All Queries</h4>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover align-middle">
+
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Department</th>
+                                                <th>Query</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for i in all_query %}
+                                            <tr>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{i.Name}}</td>
+                                                <td>{{i.Email}}</td>
+                                                <td>{{i.Departments}}</td>
+                                                <td>{{i.Query}}</td>
+
+                                                <!-- Status Badge -->
+                                                <td>
+                                                    {% if i.Status == "Pending" %}
+                                                    <span class="badge bg-warning text-dark">Pending</span>
+                                                    {% else %}
+                                                    <span class="badge bg-success">Done</span>
+                                                    {% endif %}
+                                                </td>
+
+                                                <!-- Edit -->
+                                                <td>
+                                                    <button class="btn btn-sm btn-primary">Edit</button>
+                                                </td>
+
+                                                <!-- Delete -->
+                                                <td>
+                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-        {% elif Query %}
-               <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-            <style>
-                body {
-                    background: linear-gradient(to right, #eef2f3, #dfe9f3);
-                    font-family: 'Segoe UI', sans-serif;
-                }
-            
-                .form-wrapper {
-                    min-height: 100vh;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-            
-                .query-card {
-                    width: 100%;
-                    max-width: 600px;
-                    background: #ffffff;
-                    padding: 40px;
-                    border-radius: 20px;
-                    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-                }
-            
-                .query-title {
-                    font-weight: 700;
-                    margin-bottom: 25px;
-                    text-align: center;
-                }
-            
-                .form-control[readonly],
-                textarea[readonly] {
-                    background-color: #f8f9fa;
-                    cursor: not-allowed;
-                }
-            
-                .btn-query {
-                    border-radius: 25px;
-                    padding: 10px;
-                    font-weight: 600;
-                    margin-top: 15px;
-                }
-            </style>
-            
-        
-            <div class="form-wrapper">
-                <div class="query-card">
-            
-                    <h4 class="query-title">Employee Query Details</h4>
-            
-                    <form>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input type="text" class="form-control" value="{{ data.Name }}" readonly>
-                        </div>
-            
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" value="{{ data.Email }}" readonly>
-                        </div>
-            
-                        <div class="mb-3">
-                            <label class="form-label">Employee ID</label>
-                            <input type="text" class="form-control" value="{{ data.Code }}" readonly>
-                        </div>
-            
-                        <div class="mb-3">
-                            <label class="form-label">Department</label>
-                            <input type="text" class="form-control" value="{{ data.Departments }}" readonly>
-                        </div>
-            
-                        <div class="mb-3">
-                            <label class="form-label">Query</label>
-                            <textarea class="form-control" rows="4" >{{ data.Query }}</textarea>
-                        </div>
-            
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-primary btn-query">
-                                Submit Query
-                            </button>
-                        </div>
-            
-                    </form>
-            
-                </div>
-            </div>
-      {% endif %} 
-
-    </div>
-</div>         
 
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+                            {% elif pendingquery %}
+
+                            <div class="container mt-4">
+
+                                <h4 class="mb-3">Pending Queries</h4>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover align-middle">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Department</th>
+                                                <th>Query</th>
+                                                <th>Status</th>
+                                                <th width="90">Edit</th>
+                                                <th width="90">Delete</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for i in all_query %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ i.Name }}</td>
+                                                <td>{{ i.Email }}</td>
+                                                <td>{{ i.Departments }}</td>
+                                                <td>{{ i.Query }}</td>
+
+                                                <td>
+                                                    <span class="badge bg-success">
+                                                        {{ i.Status }}
+                                                    </span>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary">
+                                                        Edit
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger">
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% elif donequery %}
+
+                            <div class="container mt-4">
+
+                                <h4 class="mb-3">Done Queries</h4>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover align-middle">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Department</th>
+                                                <th>Query</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for i in all_query %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ i.Name }}</td>
+                                                <td>{{ i.Email }}</td>
+                                                <td>{{ i.Departments }}</td>
+                                                <td>{{ i.Query }}</td>
+
+                                                <td>
+                                                    <span class="badge bg-success">
+                                                        {{ i.Status }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+
+                    <!-- Bootstrap JS -->
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
