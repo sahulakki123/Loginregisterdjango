@@ -37,4 +37,3 @@ class Query(models.Model):
     Query = models.TextField()
     Status = models.CharField(default="pending")
     Reply = models.TextField(null=True)
-    

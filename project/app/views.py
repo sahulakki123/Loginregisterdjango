@@ -161,7 +161,7 @@ def pendingquery(req):
     if 'emp_id' in req.session:
         e_id = req.session.get('emp_id')
         emp_data = AddEmployee.objects.get(id=e_id)
-        all_query = Query.objects.filter(Email=emp_data.Email, Status=False)
+        all_query = Query.objects.filter(Email=emp_data.Email, Status="pending")
         return render(req, 'empdeshbord.html', {'data':emp_data,'pendingquery':True , 'all_query':all_query})
     else:
         return redirect('Login')
@@ -170,7 +170,7 @@ def donequery(req):
     if 'emp_id' in req.session:
         e_id = req.session.get('emp_id')
         emp_data = AddEmployee.objects.get(id=e_id)
-        all_query = Query.objects.filter(Email=emp_data.Email, Status=True)
+        all_query = Query.objects.filter(Email=emp_data.Email, Status="done")
         return render(req, 'empdeshbord.html', {'data':emp_data,'donequery':True , 'all_query':all_query})
     else:
         return redirect('Login')
@@ -302,3 +302,15 @@ def reply(req , pk):
         q_data=Query.objects.get(id=pk)
         emp_all_query=Query.objects.all()
         return render(req, 'admindeshboard.html', {'data':a_data , 'q_data':q_data , 'emp_all_query':emp_all_query} )
+    
+def a_reply(req,pk):
+    if 'a_data' in req.session:
+        q_old_data = Query.objects.get(id=pk)
+        if req.method== 'POST':
+            ar=req.POST.get('reply')
+            q_old_data.Reply = ar
+            q_old_data.Status = "done"
+            q_old_data.save()
+        a_data = req.session.get('a_data')
+        emp_all_query = Query.objects.all()
+        return render(req, 'admindeshboard.html', {'data':a_data , 'emp_all_query':emp_all_query} )

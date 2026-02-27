@@ -45,5 +45,6 @@ urlpatterns = [
     path('empdashboard/donequery/',views.donequery,name='donequery'),
     path('admindashboard/emp_all_query/',views.emp_all_query,name='emp_all_query'),
     path('admindashboard/emp_all_query/reply/<int:pk>/',views.reply,name='reply'),
+    path('admindashboard/emp_all_query/a_reply/<int:pk>/',views.a_reply,name='a_reply'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

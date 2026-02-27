@@ -456,11 +456,8 @@
 
                                                 <!-- Status Badge -->
                                                 <td>
-                                                    {% if i.Status == "Pending" %}
-                                                    <span class="badge bg-warning text-dark">Pending</span>
-                                                    {% else %}
-                                                    <span class="badge bg-success">Done</span>
-                                                    {% endif %}
+                                                    <span class="badge bg-warning text-dark">{{i.Status}}</span>
+                                                    
                                                 </td>
 
                                                 <!-- Edit -->
