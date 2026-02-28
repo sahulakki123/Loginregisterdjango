@@ -34,6 +34,9 @@ urlpatterns = [
     path('admindeshboard/aad_emp/',views.aad_emp,name='aad_emp'),
     path('admindeshboard/save_emp/',views.save_emp,name='save_emp'),
     path('admindeshboard/show_emp/',views.show_emp,name='show_emp'),
+    path('admindashboard/emp_all_query/',views.emp_all_query,name='emp_all_query'),
+    path('admindashboard/emp_all_query/reply/<int:pk>/',views.reply,name='reply'),
+    path('admindashboard/emp_all_query/a_reply/<int:pk>/',views.a_reply,name='a_reply'),
     
     path('empdeshbord/',views.empdeshbord,name='empdeshbord'),
     path('empdeshbord/profile/',views.profile,name='profile'),
@@ -43,8 +46,8 @@ urlpatterns = [
     path('empdeshbord/allquery/',views.allquery,name='allquery'),
     path('empdashboard/pendingquery/',views.pendingquery,name='pendingquery'),
     path('empdashboard/donequery/',views.donequery,name='donequery'),
-    path('admindashboard/emp_all_query/',views.emp_all_query,name='emp_all_query'),
-    path('admindashboard/emp_all_query/reply/<int:pk>/',views.reply,name='reply'),
-    path('admindashboard/emp_all_query/a_reply/<int:pk>/',views.a_reply,name='a_reply'),
+    path('empdashboard/edit_all_query/<int:pk>/',views.edit_all_query,name='edit_all_query'),
+    path('empdashboard/updated_query/<int:pk>/', views.updated_query, name='updated_query'),
+    path('empdashboard/emp_q_delete/<int:id>/', views.emp_q_delete, name='emp_q_delete'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
