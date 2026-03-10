@@ -435,7 +435,14 @@
 
                             {% elif allquery %}
 
+
                             <div class="card shadow p-4">
+                                <form action="{% url 'serach' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="text"  name="search" value="{{s}}">
+                                    <button type="submit">serach</button>
+                                    <button><a href="{% url 'allquery' %}">Reset</a></button>
+                                </form>
                                 <h4 class="mb-3">All Queries</h4>
 
                                 <div class="table-responsive">

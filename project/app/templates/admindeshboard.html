@@ -151,7 +151,8 @@
             <a href="{% url 'aad_emp' %}">Add Employee</a>
             <a href="{% url 'show_emp' %}">Show Employee</a>
             <a href="{% url 'emp_all_query' %}">Employee Query</a>
-            <a href="#">Profile</a>
+            <a href="{% url 'add_item' %}">add_item</a>
+            <a href="{% url 'show_item' %}">Show Item</a>
         </div>
 
         <!-- CONTENT -->
@@ -487,9 +488,119 @@
 
 
 
+            {% elif add_item %}
 
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+
+                    <div class="col-md-6">
+
+                        <div class="card shadow-lg">
+
+                            <div class="card-header bg-primary text-white text-center">
+                                <h4>Add New Item</h4>
+                            </div>
+
+                            <div class="card-body">
+
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Name</label>
+                                        <input type="text" name="item_name" class="form-control"
+                                            placeholder="Enter item name">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Description</label>
+                                        <input type="text" name="item_desc" class="form-control"
+                                            placeholder="Enter description">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Price</label>
+                                        <input type="number" name="item_price" class="form-control"
+                                            placeholder="Enter price">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Image</label>
+                                        <input type="file" name="item_image" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Color</label>
+                                        <input type="text" name="item_color" class="form-control"
+                                            placeholder="Enter color">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Category</label>
+                                        <select name="item_category" class="form-select">
+                                            <option value="">--Select Category--</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Quantity</label>
+                                        <input type="number" name="item_quanity" class="form-control"
+                                            placeholder="Enter quantity">
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-success">
+                                            Save Item
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            {% elif show_item %}
+
+            <div class="container mt-4">
+                <h4 class="text-center mb-3">Show Items</h4>
+
+                <div class="row">
+
+                    {% for i in show_item %}
+
+                    <div class="col-md-2 mb-3">
+                        <div class="card item-card text-center">
+
+                            <img src="{{i.item_image.url}}" class="card-img-top">
+
+                            <div class="card-body p-2">
+                                <h6>{{i.item_name}}</h6>
+                                <p class="price">₹{{i.item_price}}</p>
+
+                                <a href="#" class="btn btn-success btn-sm">Pay Now</a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
 
             {% endif %}
+
 
         </div>
     </div>

@@ -37,6 +37,8 @@ urlpatterns = [
     path('admindashboard/emp_all_query/',views.emp_all_query,name='emp_all_query'),
     path('admindashboard/emp_all_query/reply/<int:pk>/',views.reply,name='reply'),
     path('admindashboard/emp_all_query/a_reply/<int:pk>/',views.a_reply,name='a_reply'),
+    path('admindashboard/add_item/',views.add_item,name='add_item'),
+    path('admindashboard/show_item/',views.show_item,name='show_item'),
     
     path('empdeshbord/',views.empdeshbord,name='empdeshbord'),
     path('empdeshbord/profile/',views.profile,name='profile'),
@@ -49,5 +51,7 @@ urlpatterns = [
     path('empdashboard/edit_all_query/<int:pk>/',views.edit_all_query,name='edit_all_query'),
     path('empdashboard/updated_query/<int:pk>/', views.updated_query, name='updated_query'),
     path('empdashboard/emp_q_delete/<int:id>/', views.emp_q_delete, name='emp_q_delete'),
+    
+    path('empdeshbord/allquery/serach/', views.serach, name='serach'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -37,3 +37,13 @@ class Query(models.Model):
     Query = models.TextField()
     Status = models.CharField(default="pending")
     Reply = models.TextField(null=True)
+    
+
+class item(models.Model):
+    item_name=models.CharField(max_length=40)
+    item_desc=models.CharField(max_length=40)
+    item_price=models.IntegerField()
+    item_image=models.ImageField(upload_to='image')
+    item_color=models.CharField(max_length=20)
+    item_category=models.CharField(max_length=40)
+    item_quanity = models.IntegerField()

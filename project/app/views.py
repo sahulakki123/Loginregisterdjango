@@ -1,5 +1,5 @@
 from django.shortcuts import render ,redirect
-from app.models import Employee , Department,AddEmployee,Query
+from app.models import Employee , Department,AddEmployee,Query ,item
 from django.contrib import messages
 from django.core.mail import send_mail
 
@@ -243,6 +243,23 @@ def emp_q_delete(req, id):
     
 
 
+def serach(req):
+    if 'emp_id' in req.session:
+        e_id = req.session.get('emp_id')
+        emp_data = AddEmployee.objects.get(id=e_id) 
+        if req.method == 'POST':
+            s = req.POST.get('search')
+            print(s)
+            # all_query = Query.objects.filter(Email=emp_data.Email,Query = s, Departments=s)
+            # all_query = Query.objects.filter(Email=emp_data.Email,Query = s)
+            # all_query = Query.objects.filter(Email__contains=emp_data.Email,Query__icontains = s)
+            all_query = Query.objects.filter(Email__contains=emp_data.Email,Departments__icontains = s)        
+            
+            return render(req,'empdeshbord.html',{'data':emp_data , 'allquery':True,'s':s, 'all_query':all_query})
+    else:
+        return redirect('Login')  
+
+
 
 
 
@@ -266,7 +283,14 @@ def logout(req):
     if 'user_id' in req.session:
         req.session.flush()
         return redirect('Login')
-    return redirect('Login')
+    elif 'a_data' in req.session:
+        req.session.flush()
+        return redirect('Login')
+    else:
+        return redirect('Login')
+
+
+
 
 def add_dep(req):
     if 'a_data' in req.session:
@@ -379,3 +403,44 @@ def a_reply(req,pk):
         a_data = req.session.get('a_data')
         emp_all_query = Query.objects.all()
         return render(req, 'admindeshboard.html', {'data':a_data , 'emp_all_query':emp_all_query} )
+    
+    
+
+
+
+def add_item(request):
+    if 'a_data' in request.session:
+        a_data = request.session.get('a_data')
+        if request.method == "POST":
+            name = request.POST.get('item_name')
+            desc = request.POST.get('item_desc')
+            price = request.POST.get('item_price')
+            image = request.FILES.get('item_image')
+            color = request.POST.get('item_color')
+            category = request.POST.get('item_category')
+            quantity = request.POST.get('item_quanity')
+
+            item.objects.create(
+                item_name=name,
+                item_desc=desc,
+                item_price=price,
+                item_image=image,
+                item_color=color,
+                item_category=category,
+                item_quanity=quantity
+            )
+            return redirect('admindeshboard')
+        else:
+            a_data = request.session.get('a_data')
+            return render(request, 'admindeshboard.html', {'data':a_data,'add_item':True} )
+    else:
+        return redirect('Login')
+    
+    
+def show_item(request):
+    if 'a_data' in request.session:
+        a_data = request.session.get('a_data')
+        show_item = item.objects.all()
+        return render(request,'admindeshboard.html',{'data':a_data,'show_item':True, 'show_item':show_item})
+    else:
+        return redirect('Login')
